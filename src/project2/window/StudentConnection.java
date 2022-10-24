@@ -6,7 +6,9 @@ package project2.window;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -20,14 +22,14 @@ public class StudentConnection {
 
     Connection conn;
 
-//    public StudentConnection() {
-//        establishConnection();
-//    }
+    public StudentConnection() {
+        establishConnection();
+    }
 
-//    public static void main(String[] args) {
-//        StudentConnection dbManager = new StudentConnection();
-//        System.out.println(dbManager.getConnection());
-//    }
+    public static void main(String[] args) {
+        StudentConnection dbManager = new StudentConnection();
+        System.out.println(dbManager.getConnection());
+    }
 
     public Connection getConnection() {
         return this.conn;
@@ -43,6 +45,7 @@ public class StudentConnection {
             }
         }
     }
+    
 
     public void closeConnections() {
         if (conn != null) {
@@ -51,6 +54,36 @@ public class StudentConnection {
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
+        }
+    }
+        public ResultSet queryDB(String sql) {
+
+        Connection connection = this.conn;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return resultSet;
+    }
+        
+            public void updateDB(String sql) {
+
+        Connection connection = this.conn;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 

@@ -37,7 +37,7 @@ public class LoginStart extends JFrame {
     JButton logButton;
     JButton RGButton;
 
-    JLabel register;
+    
     //窗口数值
     static final int WIDTH = 500;
     static final int HEIGHT = 280;
@@ -66,7 +66,7 @@ public class LoginStart extends JFrame {
         BGJPanel = new JPanel();
         BGJPanel.setBounds(0, 0, WIDTH, HEIGHT);
         BGJPanel.setLayout(null);
-        //创建BGJPanel
+        //创建TitleJPanel
         TitleJPanel = new JPanel();
         TitleJPanel.setBounds(0, 0, WIDTH, HEIGHT);
         TitleJPanel.setLayout(flowLayout);

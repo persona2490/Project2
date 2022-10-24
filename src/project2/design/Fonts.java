@@ -13,14 +13,16 @@ import java.awt.Font;
 public class Fonts {
 
     public static Font title;
+    public static Font RGtitle;
     public static Font account;
     public static Font accounttext;
     public static Font login;
 
     public Fonts() {
-        title = new Font("Serif", Font.PLAIN, 25);
+        title = new Font("Serif", Font.BOLD, 25);
+        RGtitle = new Font("DialogInput", Font.BOLD|Font.ITALIC, 30);
         account = new Font("Serif", Font.BOLD, 16);
-        accounttext = new Font("Serif", Font.BOLD, 16);
+        accounttext = new Font("Serif", Font.PLAIN, 16);
         login = new Font("Dialog", Font.BOLD, 12);
     }
 
