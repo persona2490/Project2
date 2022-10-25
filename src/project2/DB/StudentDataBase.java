@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package project2.window;
+package project2.DB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,22 +14,19 @@ import java.sql.Statement;
  *
  * @author Kevin
  */
-public class StudentConnection {
+public class StudentDataBase {
 
+    private static final String URL = "jdbc:derby://localhost:1527/Student_info_DB";  //url of the DB host
     private static final String USER_NAME = "pdc"; //your DB username
     private static final String PASSWORD = "123"; //your DB password
-    private static final String URL = "jdbc:derby://localhost:1527/Student_info_DB; create=true";  //url of the DB host
 
     Connection conn;
 
-    public StudentConnection() {
+    public StudentDataBase() {
         establishConnection();
+
     }
 
-    public static void main(String[] args) {
-        StudentConnection dbManager = new StudentConnection();
-        System.out.println(dbManager.getConnection());
-    }
 
     public Connection getConnection() {
         return this.conn;
@@ -45,7 +42,6 @@ public class StudentConnection {
             }
         }
     }
-    
 
     public void closeConnections() {
         if (conn != null) {
@@ -56,7 +52,8 @@ public class StudentConnection {
             }
         }
     }
-        public ResultSet queryDB(String sql) {
+
+    public ResultSet queryDB(String sql) {
 
         Connection connection = this.conn;
         Statement statement = null;
@@ -71,8 +68,8 @@ public class StudentConnection {
         }
         return resultSet;
     }
-        
-            public void updateDB(String sql) {
+
+    public void updateDB(String sql) {
 
         Connection connection = this.conn;
         Statement statement = null;

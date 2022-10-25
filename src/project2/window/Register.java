@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import project2.Event.Accountevent;
 import project2.design.Fonts;
 
 /**
@@ -30,18 +32,19 @@ public class Register extends JFrame {
     JLabel bgimage;//background
     JLabel Title;
     JLabel register;
-
+    //输入文本框
     JLabel account;
-    JTextField accountText;
-
+    public static JTextField accountText;
     JLabel password;
-    JTextField passwordText;
-
+    public static JTextField passwordText;
     JLabel confirm;
-    JTextField confirmField;
-
+    public static JTextField confirmTxt;
     JButton reg;
 
+//定义Listener
+    ActionListener listener1;
+
+//定义Panel
     JPanel jPanel_1;//底层
     JPanel TitlePanel;
     JPanel MidPanel;
@@ -94,7 +97,7 @@ public class Register extends JFrame {
 
         //初始化第三个
         MidPanel = new JPanel();
-        MidPanel.setBounds(150, 100, 200,250);
+        MidPanel.setBounds(150, 100, 200, 250);
         MidPanel.setOpaque(false);
         MidPanel.setLayout(flowLayout);
         //第一行初始化
@@ -108,27 +111,26 @@ public class Register extends JFrame {
         password.setFont(Fonts.account);
         //第三行
         confirm = new JLabel("Comfirm Password:");
-        confirmField = new JTextField(15);
+        confirmTxt = new JTextField(15);
         confirm.setFont(Fonts.account);
         //第四行
-        reg = new JButton("        Register        ") ;
-        
-        reg.setPreferredSize(new Dimension(150,50));
-        
+        reg = new JButton("        Register        ");
+
+        reg.setPreferredSize(new Dimension(150, 50));
 
 //        Title.setBounds(0, 0, 200, 200);
         //添加
         MidPanel.add(account);
         MidPanel.add(accountText);
-        
+
         MidPanel.add(password);
         MidPanel.add(passwordText);
-        
+
         MidPanel.add(confirm);
-        MidPanel.add(confirmField);
-        
+        MidPanel.add(confirmTxt);
+
         MidPanel.add(reg);
-        
+
         TitlePanel.add(Title);
 
         MidPanel.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -138,7 +140,26 @@ public class Register extends JFrame {
         jPanel_1.add(bgimage);
 
         this.add(jPanel_1);
+        allEvent();
+        setAllTag();
 
+    }
+
+    void allEvent() {
+        listener1 = new Accountevent();
+        accountText.addActionListener(listener1);
+        passwordText.addActionListener(listener1);
+        confirmTxt.addActionListener(listener1);
+        reg.addActionListener(listener1);
+
+    }
+
+    void setAllTag() {
+
+        accountText.setName("accountText");
+        passwordText.setName("passwordText");
+        confirmTxt.setName("confirmTxt");
+        reg.setName("reg");
     }
 
 }

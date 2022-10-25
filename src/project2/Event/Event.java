@@ -6,6 +6,7 @@ package project2.Event;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import project2.window.Register;
 
 /**
  *
@@ -15,7 +16,7 @@ public class Event implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("鼠标正在点击注册按钮");
+        Register register = new Register();
          // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
