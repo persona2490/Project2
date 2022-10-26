@@ -14,13 +14,13 @@ import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import project2.DB.StudentDataBase;
-import project2.window.Register;
+import project2.GUI.OS1;
 
 /**
  *
  * @author Kevin
  */
-public class Accountevent implements ActionListener {
+public class Register implements ActionListener {
 
     JButton source;
     Connection conn;
@@ -41,26 +41,26 @@ public class Accountevent implements ActionListener {
 
     //connect db
     void RegButton() {
-        //get password
+        //get Age
 
-        String passwordText = Register.passwordText.getText();
-        String confirmTxt = Register.confirmTxt.getText();
+        String passwordText = OS1.AgeText.getText();
+        String confirmTxt = OS1.IDText.getText();
         //判断确认密码是否一致
         //账号不能为空
         //密码不能为空
         //确认密码不能为空
-        if (Register.accountText.getText().equals("")) {
+        if (OS1.NameText.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Account Field cannot be empty", "Register imformation", JOptionPane.WARNING_MESSAGE);
-        } else if (Register.passwordText.getText().equals("")) {
+        } else if (OS1.AgeText.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Password Field cannot be empty", "Register imformation", JOptionPane.WARNING_MESSAGE);
-        } else if ((Register.confirmTxt.getText().equals(""))) {
+        } else if ((OS1.IDText.getText().equals(""))) {
             JOptionPane.showMessageDialog(null, "Comfirm Field cannot be empty", "Register imformation", JOptionPane.WARNING_MESSAGE);
         } else if (passwordText.equals(confirmTxt) == false) {
             JOptionPane.showMessageDialog(null, "Comfirm Field is not same with Password", "Register imformation", JOptionPane.WARNING_MESSAGE);
         } else {
-            String account = Register.accountText.getText();
+            String account = OS1.NameText.getText();
             //密码
-            String password = Register.passwordText.getText();
+            String password = OS1.AgeText.getText();
             try {
                 //1.获取conection
                 StudentDataBase = new StudentDataBase();

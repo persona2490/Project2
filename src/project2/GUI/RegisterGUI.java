@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package project2.window;
+package project2.GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -17,14 +17,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import project2.Event.Accountevent;
 import project2.design.Fonts;
 
 /**
  *
  * @author Kevin
  */
-public class Register extends JFrame {
+public class RegisterGUI extends JFrame {
 
     FlowLayout flowLayout;
 
@@ -53,7 +52,7 @@ public class Register extends JFrame {
     static final int WIDTH = 500;
     final int HEIGHT = 515;
 
-    public Register() {
+    public RegisterGUI() {
         run();
         validate();
         setResizable(false);
@@ -146,7 +145,7 @@ public class Register extends JFrame {
     }
 
     void allEvent() {
-        listener1 = new Accountevent();
+        listener1 = new project2.Event.Register();
         accountText.addActionListener(listener1);
         passwordText.addActionListener(listener1);
         confirmTxt.addActionListener(listener1);
@@ -163,3 +162,4 @@ public class Register extends JFrame {
     }
 
 }
+

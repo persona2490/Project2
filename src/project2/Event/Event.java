@@ -6,7 +6,7 @@ package project2.Event;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import project2.window.Register;
+import project2.GUI.OS1;
 
 /**
  *
@@ -16,7 +16,7 @@ public class Event implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Register register = new Register();
+        OS1 register = new OS1();
          // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

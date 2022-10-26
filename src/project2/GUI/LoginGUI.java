@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package project2.window;
+package project2.GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,8 +22,9 @@ import project2.design.Fonts;
 /**
  *
  * @author Kevin
+ * //调用登录窗口
  */
-public class LoginStart extends JFrame {
+public class LoginGUI extends JFrame {
 
     FlowLayout flowLayout;
 
@@ -48,12 +49,11 @@ public class LoginStart extends JFrame {
     //监听类定义
     Event regevent;
 
-    public LoginStart() {
+    public LoginGUI() {
         run();
         validate();
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
         setVisible(true);
 
     }

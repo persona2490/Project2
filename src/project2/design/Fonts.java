@@ -17,13 +17,15 @@ public class Fonts {
     public static Font account;
     public static Font accounttext;
     public static Font login;
+    public static Font Baritem;
 
     public Fonts() {
         title = new Font("Serif", Font.BOLD, 25);
-        RGtitle = new Font("DialogInput", Font.BOLD|Font.ITALIC, 30);
+        RGtitle = new Font("DialogInput", Font.BOLD | Font.ITALIC, 30);
         account = new Font("Serif", Font.BOLD, 16);
         accounttext = new Font("Serif", Font.PLAIN, 16);
         login = new Font("Dialog", Font.BOLD, 12);
+        Baritem = new Font("Dialog", Font.BOLD, 18);
     }
 
 }
