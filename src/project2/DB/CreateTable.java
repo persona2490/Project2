@@ -24,18 +24,35 @@ public class CreateTable {
         studentDB = new StudentDataBase();
         conn = studentDB.getConnection();
     }
+
     public static void main(String[] args) {
-        CreateTable = new CreateTable();
+        CreateTable CreateTable = new CreateTable();
+        CreateTable.createUserTable();
+        CreateTable.createStudentTable();
     }
 
     public void createUserTable() {
         try {
             this.state = conn.createStatement();
-//            checkExistedTable("Account");
+            checkExistedTable("Account");
 //            this.state.addBatch("CREATE  TABLE BOOK  (BOOKID  INT,   TITLE   VARCHAR(50),   CATEGORY   VARCHAR(20),   PRICE   FLOAT)");
-            this.state.addBatch("CREATE  TABLE ACCOUNT  (ACCOUNT   VARCHAR(50),   PASSWORD   VARCHAR(50))");
+            this.state.addBatch("CREATE  TABLE ACCOUNT  (ACCOUNT   VARCHAR(50),   PASSWORD   VARCHAR(50),PRIMARY KEY(ACCOUNT))");
             this.state.addBatch("INSERT INTO ACCOUNT VALUES('wsy123','wsy123')");
+            this.state.addBatch("INSERT INTO ACCOUNT VALUES('kevin','123')");
+
             this.state.executeBatch();
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+        public void createStudentTable() {
+        try {
+            this.state = conn.createStatement();
+            checkExistedTable("STUDENT");
+//            this.state.addBatch("CREATE  TABLE BOOK  (BOOKID  INT,   TITLE   VARCHAR(50),   CATEGORY   VARCHAR(20),   PRICE   FLOAT)");
+            this.state.addBatch("CREATE  TABLE STUDENT  (NAME   VARCHAR(50),   GENDER   VARCHAR(50),AGE INTEGER,MAJOR VARCHAR(50),ID VARCHAR(50),PRIMARY KEY(ID))");
+           this.state.executeBatch();
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -50,9 +67,10 @@ public class CreateTable {
             ResultSet rs = dbmd.getTables(null, null, null, types);
             while (rs.next()) {
                 String table_name = rs.getString("TABLE_NAME");
-                System.out.println(table_name);
+                
                 if (table_name.equalsIgnoreCase(name)) {
                     state.executeUpdate("Drop table " + name);
+                    System.out.println("Table " + name + "has existed.");
                     System.out.println("Table " + name + " has been deleted.");
                     break;
                 }

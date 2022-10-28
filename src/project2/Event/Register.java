@@ -34,48 +34,41 @@ public class Register implements ActionListener {
         {
             RegButton();
         }
-
     }
 
-    //connect db
+    
     void RegButton() {
-        //get Age
-
+       
+        String account = RegisterGUI.accountText.getText();
         String passwordText = RegisterGUI.passwordText.getText();
         String confirmTxt = RegisterGUI.confirmTxt.getText();
         //判断确认密码是否一致
         //账号不能为空
         //密码不能为空
         //确认密码不能为空
-        if (RegisterGUI.accountText.getText().equals("")) {
+        if (account.equals("")) {
             JOptionPane.showMessageDialog(null, "Account Field cannot be empty", "Register imformation", JOptionPane.WARNING_MESSAGE);
-        } else if (RegisterGUI.passwordText.getText().equals("")) {
+        } else if (passwordText.equals("")) {
             JOptionPane.showMessageDialog(null, "Password Field cannot be empty", "Register imformation", JOptionPane.WARNING_MESSAGE);
-        } else if ((RegisterGUI.confirmTxt.getText().equals(""))) {
+        } else if ((confirmTxt.equals(""))) {
             JOptionPane.showMessageDialog(null, "Comfirm Field cannot be empty", "Register imformation", JOptionPane.WARNING_MESSAGE);
         } else if (passwordText.equals(confirmTxt) == false) {
             JOptionPane.showMessageDialog(null, "Comfirm Field is not same with Password", "Register imformation", JOptionPane.WARNING_MESSAGE);
         } else {
-            String account = RegisterGUI.accountText.getText();
-            //密码
-            String password = RegisterGUI.passwordText.getText();
+
             try {
                 //1.获取conection
                 StudentDataBase = new StudentDataBase();
                 state = StudentDataBase.getConnection().createStatement();
                 //2.定义SQL
-                String sql = "INSERT INTO ACCOUNT VALUES ('" + account + "','" + password + "')";
+                String sql = "INSERT INTO ACCOUNT VALUES ('" + account + "','" + passwordText + "')";
                 state.execute(sql);
                 System.out.println("Register Successfully");
-                 JOptionPane.showMessageDialog(null, "Register Successfully", "Register imformation", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Register Successfully", "Register imformation", JOptionPane.WARNING_MESSAGE);
                 StudentDataBase.closeConnections();
             } catch (SQLException e) {
-                 JOptionPane.showMessageDialog(null, "Account has existed", "Register imformation", JOptionPane.WARNING_MESSAGE);;
+                JOptionPane.showMessageDialog(null, "Account has existed", "Register imformation", JOptionPane.WARNING_MESSAGE);;
             }
-
         }
-
     }
 }
-
-

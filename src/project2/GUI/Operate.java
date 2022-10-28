@@ -10,10 +10,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionListener;
 import java.util.Vector;
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,7 +27,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import project2.Event.Login;
 import project2.Event.OperatingEvent;
 import project2.design.Fonts;
 
@@ -38,7 +35,7 @@ import project2.design.Fonts;
  * @author Kevind 调用注册窗口
  */
 public class Operate extends JFrame {
-
+    
     FlowLayout flowLayout;
     //Label
     JLabel bgimage, Name, Age, ID, Major, Readsection;
@@ -54,8 +51,8 @@ public class Operate extends JFrame {
     static final int WIDTH = 1100;
     final int HEIGHT = 725;
     //CRUD button
-    JButton create, delete, read, update, reset;
-    JRadioButton male, female;
+    JButton create, delete, read, readAll, update, reset;
+    public static JRadioButton male, female;
     //定义菜单
     JMenuBar menubar;
     JMenu menu, menu1;
@@ -73,7 +70,7 @@ public class Operate extends JFrame {
     static int row;
     public static DefaultTableModel model;
     static TableColumnModel columnModel;
-
+    
     public Operate() {
         run();
         validate();
@@ -81,12 +78,12 @@ public class Operate extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
-
+    
     void run() {
         flowLayout = new FlowLayout(FlowLayout.CENTER);
         //Font
         Fonts Fonts = new Fonts();
-
+        
         Toolkit kit = Toolkit.getDefaultToolkit();//获取对象大小
         Dimension screenSize = kit.getScreenSize();
         int width = screenSize.width;
@@ -124,17 +121,17 @@ public class Operate extends JFrame {
         menu = new JMenu("Management");
         itemA = new JMenuItem("See all account");
         itemB = new JMenuItem("Change password");
-
+        
         menu1 = new JMenu("Account");
         item1 = new JMenuItem("Exit");
         item2 = new JMenuItem("Log out");
-
+        
         menu.add(itemA);
         menu.add(itemB);
-
+        
         menu1.add(item1);
         menu1.add(item2);
-
+        
         menubar.add(menu);
         menubar.add(menu1);
 
@@ -150,7 +147,7 @@ public class Operate extends JFrame {
         male = new JRadioButton("Male");
         male.setFont(Fonts.account);
         male.setOpaque(false);
-
+        
         female = new JRadioButton("Female");
         female.setFont(Fonts.account);
         female.setOpaque(false);
@@ -160,15 +157,15 @@ public class Operate extends JFrame {
         Age = new JLabel("AGE");
         AgeText = new JTextField(15);
         Age.setFont(Fonts.account);
-
+        
         ID = new JLabel("ID");
         IDText = new JTextField(15);
         ID.setFont(Fonts.account);
-
+        
         Major = new JLabel("MAJOR");
         MajorText = new JTextField(15);
         Major.setFont(Fonts.account);
-
+        
         Readsection = new JLabel("Reading with ID");
         ReadsectionText = new JTextField(15);
         Readsection.setFont(Fonts.account);
@@ -180,6 +177,8 @@ public class Operate extends JFrame {
         delete.setPreferredSize(new Dimension(150, 50));
         read = new JButton("Read");
         read.setPreferredSize(new Dimension(150, 50));
+        readAll = new JButton("ReadAll");
+        readAll.setPreferredSize(new Dimension(150, 50));
         update = new JButton("Update");
         update.setPreferredSize(new Dimension(150, 50));
         reset = new JButton("Reset");
@@ -191,15 +190,16 @@ public class Operate extends JFrame {
         ButtomPanel.setBorder(BorderFactory.createTitledBorder("Account information displays"));
         ButtomPanel.setOpaque(false);
         ButtomPanel.setLayout(flowLayout);
+        //shi li hua tabble
         table();
         resultArea = new JTextArea();
         resultArea.setBounds(15, 400, WIDTH - 30, 200);
         resultArea.setBorder(BorderFactory.createTitledBorder("Information stauts displays"));
-
+        
         resultArea.setEditable(false);
         resultArea.setForeground(new Color(224, 57, 151));
 
-//add information
+//add information Bar
         UpperPanel.add(Name);
         UpperPanel.add(NameText);
         UpperPanel.add(male);
@@ -216,23 +216,24 @@ public class Operate extends JFrame {
         UpperPanel.add(create);
         UpperPanel.add(delete);
         UpperPanel.add(read);
+        UpperPanel.add(readAll);
         UpperPanel.add(update);
         UpperPanel.add(reset);
-
+        
         ButtomPanel.add(jscrollpanel);
         jPanel_1.add(UpperPanel, BorderLayout.NORTH);
         jPanel_1.add(ButtomPanel);
-
+        
         jPanel_1.add(bgimage);
         this.add(resultArea);
         this.setJMenuBar(menubar);
         this.add(jPanel_1);
         
-        allEvent();//assign event to button
         setAllTag();//assign name
+        allEvent();//assign event to button
 
     }
-
+    
     void table() {
         Jtable = getTable();
         jscrollpanel = new JScrollPane(Jtable);//添加一个浏览窗格
@@ -240,7 +241,7 @@ public class Operate extends JFrame {
         Jtable.setPreferredSize(new Dimension(WIDTH - 80, 10000));//给表格设置大小
         jscrollpanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);//将滑动组件显示在窗口中
     }
-
+    
     JTable getTable() {
         if (Jtable == null) {
             Jtable = new JTable();//创建 
@@ -264,8 +265,7 @@ public class Operate extends JFrame {
         }
         return Jtable;
     }
-
-
+    
     void setAllTag() {
         NameText.setName("NameText");
         AgeText.setName("AgeText");
@@ -274,20 +274,28 @@ public class Operate extends JFrame {
         itemB.setName("itemB");
         item1.setName("Exit");
         item2.setName("Log out");
-        
+
         //button
         create.setName("create");
         delete.setName("delete");
+        update.setName("update");
         read.setName("read");
-        delete.setName("delete");
+        readAll.setName("readAll");
         reset.setName("reset");
-
+        
     }
-
+    
     private void allEvent() {
         listener_1 = new OperatingEvent();
         itemA.addActionListener(listener_1);
         itemB.addActionListener(listener_1);
+        
+        create.addActionListener(listener_1);
+        update.addActionListener(listener_1);
+        read.addActionListener(listener_1);
+        delete.addActionListener(listener_1);
+        readAll.addActionListener(listener_1);
+        reset.addActionListener(listener_1);
 //        item1.addActionListener(listener_1);
 //        item2.addActionListener(listener_1);
 

@@ -79,8 +79,7 @@ public class LoginGUI extends JFrame {
         LogJPanel.setBorder(BorderFactory.createTitledBorder("基本"));
 
         //Font Configuration
-        Fonts Fonts = new Fonts();
-
+        Fonts Fonts = new Fonts();       
         //窗口大小
         Toolkit kit = Toolkit.getDefaultToolkit();//获取对象大小
         Dimension screenSize = kit.getScreenSize();

@@ -51,15 +51,15 @@ public class PasswordChangeGui extends JFrame {
         flowlayout = new FlowLayout(FlowLayout.CENTER);
         this.setLayout(flowlayout);//设置布局
 
-        password = new JLabel("密码");
+        password = new JLabel("Password ");
         passwordtext = new JPasswordField(15);
-        changeown = new JButton("修改密码");
+        changeown = new JButton("Change");
 
         lintener_1 = new Login();
         changeown.addActionListener(lintener_1);
 
         changeown.setName("changeown");
-        this.setTitle("更改密码");
+        this.setTitle("PasswordChange");
 
         this.add(password);
         this.add(passwordtext);
