@@ -24,6 +24,9 @@ public class CreateTable {
         studentDB = new StudentDataBase();
         conn = studentDB.getConnection();
     }
+    public static void main(String[] args) {
+        CreateTable = new CreateTable();
+    }
 
     public void createUserTable() {
         try {

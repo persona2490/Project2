@@ -16,29 +16,31 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import project2.Event.Event;
+
+import project2.Event.Login;
 import project2.design.Fonts;
 
 /**
  *
- * @author Kevin
- * //调用登录窗口
+ * @author Kevin //调用登录窗口
  */
 public class LoginGUI extends JFrame {
 
     FlowLayout flowLayout;
+    //监听类定义
+
+    Login loginEvent;
 
     //Label
     JLabel bgimage;
     JLabel title;
     JLabel account;
     JLabel passowrd;
-    JTextField accountText;
-    JTextField passwordText;
+    public static JTextField accountText;
+    public static JTextField passwordText;
     JButton logButton;
     JButton RGButton;
 
-    
     //窗口数值
     static final int WIDTH = 500;
     static final int HEIGHT = 280;
@@ -46,8 +48,6 @@ public class LoginGUI extends JFrame {
     JPanel BGJPanel;
     JPanel TitleJPanel;
     JPanel LogJPanel;
-    //监听类定义
-    Event regevent;
 
     public LoginGUI() {
         run();
@@ -78,8 +78,8 @@ public class LoginGUI extends JFrame {
         LogJPanel.setOpaque(false);
         LogJPanel.setBorder(BorderFactory.createTitledBorder("基本"));
 
-        //初始化字体
-        Fonts font = new Fonts();
+        //Font Configuration
+        Fonts Fonts = new Fonts();
 
         //窗口大小
         Toolkit kit = Toolkit.getDefaultToolkit();//获取对象大小
@@ -90,14 +90,14 @@ public class LoginGUI extends JFrame {
         int y = (height - HEIGHT) / 2;
         this.setBounds(x, y, WIDTH, HEIGHT);
         this.setTitle("Login");
-        //背景图片
+        //Background
 //        ImageIcon img = new ImageIcon("D:/STUDY/COMP603 Prpgram design/Project2/Project2/src/project2/img/1.jpg");
         ImageIcon img = new ImageIcon("src/Project2/img/1.jpg");
 
         bgimage = new JLabel(img);
         bgimage.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
 
-        //标题
+        //Tittle
         title = new JLabel("Student Information Management System");
         title.setFont(Fonts.title);
 
@@ -123,14 +123,14 @@ public class LoginGUI extends JFrame {
         logButton.setFont(Fonts.login);
         logButton.setBackground(new Color(8, 189, 252));
         logButton.setForeground(new Color(224, 57, 151));
+        logButton.setName("Login");
         //注册按钮
         RGButton = new JButton("Register");
-        
         RGButton.setPreferredSize(new Dimension(85, 35));
         RGButton.setFont(Fonts.login);
         RGButton.setBackground(new Color(8, 189, 252));
         RGButton.setForeground(new Color(224, 57, 151));
-
+        RGButton.setName("Reg");
         //添加
         LogJPanel.add(account);
         LogJPanel.add(accountText);
@@ -149,8 +149,9 @@ public class LoginGUI extends JFrame {
 
     }
 
-    void allEvent(){
-        regevent = new Event();
-        RGButton.addMouseListener(regevent);
+    void allEvent() {
+        loginEvent = new Login();
+        RGButton.addActionListener(loginEvent);
+        logButton.addActionListener(loginEvent);
     }
 }

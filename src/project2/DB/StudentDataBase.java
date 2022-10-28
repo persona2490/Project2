@@ -27,7 +27,6 @@ public class StudentDataBase {
 
     }
 
-
     public Connection getConnection() {
         return this.conn;
     }
@@ -67,21 +66,6 @@ public class StudentDataBase {
             System.out.println(ex.getMessage());
         }
         return resultSet;
-    }
-
-    public void updateDB(String sql) {
-
-        Connection connection = this.conn;
-        Statement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            statement = connection.createStatement();
-            statement.executeUpdate(sql);
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 
 }

@@ -7,14 +7,12 @@ package project2.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import project2.DB.StudentDataBase;
-import project2.GUI.OS1;
+import project2.GUI.RegisterGUI;
 
 /**
  *
@@ -43,24 +41,24 @@ public class Register implements ActionListener {
     void RegButton() {
         //get Age
 
-        String passwordText = OS1.AgeText.getText();
-        String confirmTxt = OS1.IDText.getText();
+        String passwordText = RegisterGUI.passwordText.getText();
+        String confirmTxt = RegisterGUI.confirmTxt.getText();
         //判断确认密码是否一致
         //账号不能为空
         //密码不能为空
         //确认密码不能为空
-        if (OS1.NameText.getText().equals("")) {
+        if (RegisterGUI.accountText.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Account Field cannot be empty", "Register imformation", JOptionPane.WARNING_MESSAGE);
-        } else if (OS1.AgeText.getText().equals("")) {
+        } else if (RegisterGUI.passwordText.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Password Field cannot be empty", "Register imformation", JOptionPane.WARNING_MESSAGE);
-        } else if ((OS1.IDText.getText().equals(""))) {
+        } else if ((RegisterGUI.confirmTxt.getText().equals(""))) {
             JOptionPane.showMessageDialog(null, "Comfirm Field cannot be empty", "Register imformation", JOptionPane.WARNING_MESSAGE);
         } else if (passwordText.equals(confirmTxt) == false) {
             JOptionPane.showMessageDialog(null, "Comfirm Field is not same with Password", "Register imformation", JOptionPane.WARNING_MESSAGE);
         } else {
-            String account = OS1.NameText.getText();
+            String account = RegisterGUI.accountText.getText();
             //密码
-            String password = OS1.AgeText.getText();
+            String password = RegisterGUI.passwordText.getText();
             try {
                 //1.获取conection
                 StudentDataBase = new StudentDataBase();
@@ -80,9 +78,4 @@ public class Register implements ActionListener {
     }
 }
 
-
-//判断确认密码是否一致
-//账号不能为空
-//密码不能为空
-//确认密码不能为空
 

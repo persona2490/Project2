@@ -5,6 +5,7 @@
 package project2.GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -28,13 +29,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import project2.Event.Login;
+import project2.Event.OperatingEvent;
 import project2.design.Fonts;
 
 /**
  *
  * @author Kevind 调用注册窗口
  */
-public class OS1 extends JFrame {
+public class Operate extends JFrame {
 
     FlowLayout flowLayout;
     //Label
@@ -42,7 +45,7 @@ public class OS1 extends JFrame {
     //输入文本框
     public static JTextField NameText, AgeText, IDText, MajorText, ReadsectionText;
 //定义Listener
-    ActionListener listener1;
+    OperatingEvent listener_1;
 //定义Panel
     JPanel jPanel_1;//底层
     JPanel ButtomPanel;
@@ -56,10 +59,10 @@ public class OS1 extends JFrame {
     //定义菜单
     JMenuBar menubar;
     JMenu menu, menu1;
-    JMenuItem itemA, itemB, itemC, itemD;
+    JMenuItem itemA, itemB;
     JMenuItem item1, item2;
     //显示结果 
-    JTextArea resultArea;
+    public static JTextArea resultArea;
 
     //Figure of table
     String columns[] = {"NAME", "GENDER", "AGE", "MAJOR", "ID"};//coolum name
@@ -71,7 +74,7 @@ public class OS1 extends JFrame {
     public static DefaultTableModel model;
     static TableColumnModel columnModel;
 
-    public OS1() {
+    public Operate() {
         run();
         validate();
         setResizable(false);
@@ -119,18 +122,15 @@ public class OS1 extends JFrame {
         //设置菜单栏
         menubar = new JMenuBar();
         menu = new JMenu("Management");
-        itemA = new JMenuItem("查看在线的账号");
-        itemB = new JMenuItem("See all account");
-        itemC = new JMenuItem("更改员工账号信息");
-        itemD = new JMenuItem("Change password");
+        itemA = new JMenuItem("See all account");
+        itemB = new JMenuItem("Change password");
+
         menu1 = new JMenu("Account");
         item1 = new JMenuItem("Exit");
         item2 = new JMenuItem("Log out");
 
         menu.add(itemA);
         menu.add(itemB);
-        menu.add(itemC);
-        menu.add(itemD);
 
         menu1.add(item1);
         menu1.add(item2);
@@ -195,7 +195,9 @@ public class OS1 extends JFrame {
         resultArea = new JTextArea();
         resultArea.setBounds(15, 400, WIDTH - 30, 200);
         resultArea.setBorder(BorderFactory.createTitledBorder("Information stauts displays"));
-        resultArea.setOpaque(false);
+
+        resultArea.setEditable(false);
+        resultArea.setForeground(new Color(224, 57, 151));
 
 //add information
         UpperPanel.add(Name);
@@ -215,6 +217,7 @@ public class OS1 extends JFrame {
         UpperPanel.add(delete);
         UpperPanel.add(read);
         UpperPanel.add(update);
+        UpperPanel.add(reset);
 
         ButtomPanel.add(jscrollpanel);
         jPanel_1.add(UpperPanel, BorderLayout.NORTH);
@@ -224,8 +227,9 @@ public class OS1 extends JFrame {
         this.add(resultArea);
         this.setJMenuBar(menubar);
         this.add(jPanel_1);
-//        allEvent();
-//        setAllTag();
+        
+        allEvent();//assign event to button
+        setAllTag();//assign name
 
     }
 
@@ -260,18 +264,32 @@ public class OS1 extends JFrame {
         }
         return Jtable;
     }
-//    void allEvent() {
-//        listener1 = new Accountevent();
-//        NameText.addActionListener(listener1);
-//        AgeText.addActionListener(listener1);
-//        IDText.addActionListener(listener1);
-//        add.addActionListener(listener1);
-//    }
-//
-//    void setAllTag() {
-//        NameText.setName("NameText");
-//        AgeText.setName("AgeText");
-//        IDText.setName("IDText");
-//        add.setName("add");
-//    }
+
+
+    void setAllTag() {
+        NameText.setName("NameText");
+        AgeText.setName("AgeText");
+        IDText.setName("IDText");
+        itemA.setName("itemA");
+        itemB.setName("itemB");
+        item1.setName("Exit");
+        item2.setName("Log out");
+        
+        //button
+        create.setName("create");
+        delete.setName("delete");
+        read.setName("read");
+        delete.setName("delete");
+        reset.setName("reset");
+
+    }
+
+    private void allEvent() {
+        listener_1 = new OperatingEvent();
+        itemA.addActionListener(listener_1);
+        itemB.addActionListener(listener_1);
+//        item1.addActionListener(listener_1);
+//        item2.addActionListener(listener_1);
+
+    }
 }

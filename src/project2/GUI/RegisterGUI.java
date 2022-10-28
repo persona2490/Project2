@@ -4,7 +4,6 @@
  */
 package project2.GUI;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -17,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import project2.Event.Register;
 import project2.design.Fonts;
 
 /**
@@ -145,21 +145,15 @@ public class RegisterGUI extends JFrame {
     }
 
     void allEvent() {
-        listener1 = new project2.Event.Register();
-        accountText.addActionListener(listener1);
-        passwordText.addActionListener(listener1);
-        confirmTxt.addActionListener(listener1);
+        listener1 = new Register();
+
         reg.addActionListener(listener1);
 
     }
 
     void setAllTag() {
 
-        accountText.setName("accountText");
-        passwordText.setName("passwordText");
-        confirmTxt.setName("confirmTxt");
         reg.setName("reg");
     }
 
 }
-

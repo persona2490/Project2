@@ -11,14 +11,15 @@ import project2.DB.StudentDataBase;
  *
  * @author Kevin
  */
-public class StudentSystem {
+public class RUN {
 
     public static void main(String[] args) {
-//        LoginStart loginStart = new LoginStart();
-//        Register register = new Register();
-        OS1 os = new OS1();
-//        StudentDataBase studentConnection = new StudentDataBase();
+//       LoginGUI loginStart = new LoginGUI();
 
+//        Register register = new Register();
+        Operate os = new Operate();
+//        StudentDataBase studentConnection = new StudentDataBase();
+//        PasswordChangeGui passwordChangeGui = new PasswordChangeGui();
 //        CreateTable create = new CreateTable();
 //        create.createUserTable();
 //        create.closeConnection();
