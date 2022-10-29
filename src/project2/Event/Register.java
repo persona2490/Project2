@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import project2.DB.StudentDataBase;
+import project2.DB.DataBase;
 import project2.GUI.RegisterGUI;
 
 /**
@@ -20,17 +20,17 @@ import project2.GUI.RegisterGUI;
  */
 public class Register implements ActionListener {
 
-    JButton source;
+    JButton Button;
     Connection conn;
 
-    StudentDataBase StudentDataBase;
+    DataBase StudentDataBase;
     private Statement state;
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        source = (JButton) e.getSource();
-        if ("reg".equals(source.getName()));
+        Button = (JButton) e.getSource();
+        if ("reg".equals(Button.getName()));
         {
             RegButton();
         }
@@ -58,7 +58,7 @@ public class Register implements ActionListener {
 
             try {
                 //1.获取conection
-                StudentDataBase = new StudentDataBase();
+                StudentDataBase = new DataBase();
                 state = StudentDataBase.getConnection().createStatement();
                 //2.定义SQL
                 String sql = "INSERT INTO ACCOUNT VALUES ('" + account + "','" + passwordText + "')";

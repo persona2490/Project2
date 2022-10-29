@@ -153,4 +153,8 @@ public class LoginGUI extends JFrame {
         RGButton.addActionListener(loginEvent);
         logButton.addActionListener(loginEvent);
     }
+//让当前窗口消失
+    public void close() {
+        this.dispose();
+   }
 }

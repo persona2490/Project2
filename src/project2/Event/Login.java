@@ -4,21 +4,21 @@
  */
 package project2.Event;
 
-import static com.sun.glass.ui.Cursor.setVisible;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.security.auth.login.AccountException;
 import javax.swing.JButton;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import project2.DB.StudentDataBase;
+import project2.DB.DataBase;
 import project2.GUI.LoginGUI;
-import project2.GUI.Operate;
+import project2.GUI.OperateGUI;
 import project2.GUI.PasswordChangeGui;
+import project2.GUI.RUN;
 import project2.GUI.RegisterGUI;
 
 /**
@@ -27,14 +27,18 @@ import project2.GUI.RegisterGUI;
  */
 public class Login implements ActionListener {
 
-    StudentDataBase conn;
+    DataBase conn;
     ResultSet rs;
-    JButton JButton;
     PreparedStatement ps = null;
-    static String Account;
     Statement state;
-    LoginGUI LoginGUI;
+
+    JMenuItem item;
+    JButton JButton;
+    static String Account;
+     LoginGUI LoginGUI;
     RegisterGUI registerGUI;
+    static OperateGUI operate;
+    static PasswordChangeGui passwordChangeGui;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -43,7 +47,8 @@ public class Login implements ActionListener {
             if (JButton.getName().equals("Login")) {
 
                 if (IFMatch()) {
-                    Operate operate = new Operate();
+                    RUN.LogSurface.close();
+                    operate = new OperateGUI();
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Login Fail");
@@ -52,20 +57,29 @@ public class Login implements ActionListener {
             }
             if (JButton.getName().equals("Reg")) {
                 registerGUI = new RegisterGUI();
-//                LoginGUI.setVisible(false);
-                
-//                 LoginGUI.dispatchEvent(new WindowEvent(LoginGUI,WindowEvent.WINDOW_CLOSING) );
+
             }
-            if (JButton.getName() == "changeown") {
+            if (JButton.getName().equals("changeown")) {
                 String Npassword = PasswordChangeGui.passwordtext.getText();
                 System.out.println(Npassword);
                 ChangePassword(Account, Npassword);
 
-                JOptionPane.showMessageDialog(null, "Change Successfully", "", JOptionPane.WARNING_MESSAGE);
-                System.exit(0);
+                JOptionPane.showMessageDialog(null, "Change Successfully, Please re sign in again", "", JOptionPane.WARNING_MESSAGE);
+                //Close OperateGUI GUI
+                operate.dispose();
+                passwordChangeGui.dispose();
+                RUN.main(null);
             }
 
-        } catch (SQLException e1) {
+        } catch (Exception e1) {
+            try {
+                item = (JMenuItem) e.getSource();
+                if ("itemB".equals(item.getName())) {
+                    passwordChangeGui = new PasswordChangeGui();
+                }
+            } catch (Exception e2) {
+            }
+
         }
     }
 
@@ -74,11 +88,12 @@ public class Login implements ActionListener {
         String account = LoginGUI.accountText.getText();
         String password = LoginGUI.passwordText.getText();
         this.Account = account;
-        conn = new StudentDataBase();
+        conn = new DataBase();
         ps = conn.getConnection().prepareStatement(sqlCheck);
         ps.setString(1, account);
         ps.setString(2, password);
         rs = ps.executeQuery();
+
         return rs.next();
 
     }
@@ -86,7 +101,7 @@ public class Login implements ActionListener {
     private void ChangePassword(String account, String password) {
 
         try {
-            conn = new StudentDataBase();
+            conn = new DataBase();
             state = conn.getConnection().createStatement();
             String sqlChange = "UPDATE Account  SET  password = '" + password + "' WHERE ACCOUNT = '" + account + "'";
             state.execute(sqlChange);

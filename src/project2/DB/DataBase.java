@@ -14,7 +14,7 @@ import java.sql.Statement;
  *
  * @author Kevin
  */
-public class StudentDataBase {
+public class DataBase {
 
     private static final String URL = "jdbc:derby://localhost:1527/Student_info_DB";  //url of the DB host
     private static final String USER_NAME = "pdc"; //your DB username
@@ -22,7 +22,7 @@ public class StudentDataBase {
 
     Connection conn;
 
-    public StudentDataBase() {
+    public DataBase() {
         establishConnection();
 
     }

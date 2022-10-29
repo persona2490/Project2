@@ -16,12 +16,12 @@ import java.sql.Statement;
  */
 public class CreateTable {
 
-    private final StudentDataBase studentDB;
+    private final DataBase studentDB;
     private final Connection conn;
     private Statement state;
 
     public CreateTable() {
-        studentDB = new StudentDataBase();
+        studentDB = new DataBase();
         conn = studentDB.getConnection();
     }
 

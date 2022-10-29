@@ -4,25 +4,23 @@
  */
 package project2.GUI;
 
-import project2.DB.CreateTable;
-import project2.DB.StudentDataBase;
-
 /**
  *
  * @author Kevin
  */
 public class RUN {
+    //调用这个实例来关闭初始窗口
+
+    public static LoginGUI LogSurface;
 
     public static void main(String[] args) {
-//       LoginGUI loginStart = new LoginGUI();
+//        runLogGui();
+        OperateGUI operateGUI = new OperateGUI();
+    }
 
-//        Register register = new Register();
-        Operate os = new Operate();
-//        StudentDataBase studentConnection = new StudentDataBase();
-//        PasswordChangeGui passwordChangeGui = new PasswordChangeGui();
-//        CreateTable create = new CreateTable();
-//        create.createUserTable();
-//        create.closeConnection();
+    static public void runLogGui() {
+        LoginGUI loginGUI = new LoginGUI();
+        LogSurface = loginGUI;
     }
 
 }
