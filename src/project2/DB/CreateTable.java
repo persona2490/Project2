@@ -11,18 +11,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
+ * This class is used to create tables and check for duplicate table names
  *
  * @author Kevin
  */
-public class CreateTable {
-
-    private final DataBase studentDB;
-    private final Connection conn;
-    private Statement state;
+public class CreateTable extends AbstractDB{
 
     public CreateTable() {
-        studentDB = new DataBase();
-        conn = studentDB.getConnection();
+        super();
     }
 
     public static void main(String[] args) {
@@ -31,7 +27,8 @@ public class CreateTable {
         CreateTable.createStudentTable();
     }
 
-    public void createUserTable() {
+    @Override
+    public void createUserTable() {//create UserTable
         try {
             this.state = conn.createStatement();
             checkExistedTable("Account");
@@ -46,20 +43,24 @@ public class CreateTable {
             System.out.println(ex.getMessage());
         }
     }
-        public void createStudentTable() {
+
+    @Override
+    public void createStudentTable() {//create Student Table
         try {
             this.state = conn.createStatement();
             checkExistedTable("STUDENT");
 //            this.state.addBatch("CREATE  TABLE BOOK  (BOOKID  INT,   TITLE   VARCHAR(50),   CATEGORY   VARCHAR(20),   PRICE   FLOAT)");
-            this.state.addBatch("CREATE  TABLE STUDENT  (NAME   VARCHAR(50),   GENDER   VARCHAR(50),AGE INTEGER,MAJOR VARCHAR(50),ID VARCHAR(50),PRIMARY KEY(ID))");
-           this.state.executeBatch();
+            this.state.addBatch("CREATE  TABLE STUDENT  (NAME   VARCHAR(50),   GENDER   VARCHAR(50),AGE VARCHAR(50),MAJOR VARCHAR(50),ID VARCHAR(50),PRIMARY KEY(ID))");
+            this.state.addBatch("INSERT INTO STUDENT VALUES('SIYI WANG','male','23','COMPUTER SCIENCE','NGJ4393')");
+            this.state.executeBatch();
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    public void checkExistedTable(String name) {
+    @Override
+    public void checkExistedTable(String name) {//Check if table name has existed
         try {
             DatabaseMetaData dbmd = this.conn.getMetaData();
             String[] types = {"TABLE"};
@@ -67,7 +68,7 @@ public class CreateTable {
             ResultSet rs = dbmd.getTables(null, null, null, types);
             while (rs.next()) {
                 String table_name = rs.getString("TABLE_NAME");
-                
+
                 if (table_name.equalsIgnoreCase(name)) {
                     state.executeUpdate("Drop table " + name);
                     System.out.println("Table " + name + "has existed.");
@@ -81,6 +82,7 @@ public class CreateTable {
         }
     }
 
+    @Override
     public void closeConnection() {
         this.studentDB.closeConnections();
     }

@@ -29,40 +29,45 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import project2.Event.Login;
-import project2.Event.OperatingEvent;
+import project2.Event.GUI_Switching_Event;
+import project2.Event.Modify_Info_Event;
 import project2.design.Fonts;
 
 /**
+ * all each window The menu bar has two columns: system and user. The user bar
+ * can view users and change passwords, and the system bar can log out and log
+ * in. The top part is responsible for the operation function, the middle part
+ * can display student information as a table, and the bottom part displays user
+ * information
  *
- * @author Kevind 调用注册窗口
+ * @author Kevind
  */
-public class OperateGUI extends JFrame {
+public class ManageGUI extends JFrame {
 
     FlowLayout flowLayout;
     //Label
     JLabel bgimage, Name, Age, ID, Major, Readsection;
-    //输入文本框
+    //JTextField
     public static JTextField NameText, AgeText, IDText, MajorText, ReadsectionText;
-//定义Listener
+    //Define Listener
     ActionListener listener_1, listener_2;
-//定义Panel
-    JPanel jPanel_1;//底层
+    //Define Panel
+    JPanel jPanel_1;//bottom layer
     JPanel BottomPanel;
     JPanel UpperPanel;
-    //窗口变量
+    //window variable
     static final int WIDTH = 1100;
     static final int HEIGHT = 725;
     //CRUD button
     JButton create, delete, read, readAll, update, reset;
-    ButtonGroup genderGroup;
+    public static ButtonGroup genderGroup;
     public static JRadioButton male, female;
-    //定义菜单
+    //define menu
     JMenuBar menubar;
     JMenu menu, menu1;
-    JMenuItem itemA, itemB;
-    JMenuItem item1, item2;
-    //显示结果 
+    JMenuItem SeeAllUser, PasswordChange;
+    JMenuItem exit, LogOut;
+    // show result
     public static JTextArea resultArea;
     //Font
     Fonts Fonts = new Fonts();
@@ -77,18 +82,19 @@ public class OperateGUI extends JFrame {
     public static DefaultTableModel model;
     static TableColumnModel columnModel;
 
-    public OperateGUI() {
+    public ManageGUI() {
+        System.out.println("Current interface: OprateGUI");
         run();
-        validate();
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
+        validate();
     }
 
     void run() {
         flowLayout = new FlowLayout(FlowLayout.CENTER);
 
-        Toolkit kit = Toolkit.getDefaultToolkit();//获取对象大小
+        Toolkit kit = Toolkit.getDefaultToolkit();//get object size
         Dimension screenSize = kit.getScreenSize();
         int width = screenSize.width;
         int height = screenSize.height;
@@ -96,7 +102,7 @@ public class OperateGUI extends JFrame {
         int y = (height - HEIGHT) / 2;
         this.setBounds(x, y, WIDTH, HEIGHT);
         this.setTitle("Register");
-        //背景图片
+        //Background picture
         ImageIcon img = new ImageIcon("src/Project2/img/1.jpg");
         Image image = img.getImage();
         img.setImage(img.getImage().getScaledInstance(WIDTH, HEIGHT, image.SCALE_DEFAULT));
@@ -107,10 +113,10 @@ public class OperateGUI extends JFrame {
         jPanel_1.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         jPanel_1.setLayout(null);
         jPanel_1.setOpaque(false);
-        //UpPanel
+        //UpperPanel
         UpperPanel = new JPanel();
         UpperPanel.setBounds(0, 0, WIDTH - 12, 150);
-//        UpperPanel.setBounds(0, 525, WIDTH - 12, 150);
+
 
         UpperPanel.setOpaque(false);
         UpperPanel.setLayout(flowLayout);
@@ -125,77 +131,85 @@ public class OperateGUI extends JFrame {
         genderGroup = new ButtonGroup();
         male = new JRadioButton("Male");
         female = new JRadioButton("Female");
-//        buttonGroup.add(male);
-//        buttonGroup.add(female);
-        //设置菜单栏
+
+        //set menu bar
         menubar = new JMenuBar();
-        menu = new JMenu("Management");
-        itemA = new JMenuItem("See all account");
-        itemB = new JMenuItem("Change password");
+        menu = new JMenu("User");
+        menu.setFont(Fonts.BarMenu);
 
-        menu1 = new JMenu("Account");
-        item1 = new JMenuItem("Exit");
-        item2 = new JMenuItem("Log out");
+        SeeAllUser = new JMenuItem("See all account");
+        SeeAllUser.setFont(Fonts.BarItem);
+        PasswordChange = new JMenuItem("Change password");
+        PasswordChange.setFont(Fonts.BarItem);
 
-        menu.add(itemA);
-        menu.add(itemB);
+        menu1 = new JMenu("System");
+        menu1.setFont(Fonts.BarMenu);
 
-        menu1.add(item1);
-        menu1.add(item2);
+        exit = new JMenuItem("Exit");
+        exit.setFont(Fonts.BarItem);
+        LogOut = new JMenuItem("Log out");
+        LogOut.setFont(Fonts.BarItem);
+
+        menu.add(SeeAllUser);
+        menu.add(PasswordChange);
+
+        menu1.add(exit);
+        menu1.add(LogOut);
 
         menubar.add(menu);
         menubar.add(menu1);
 
-//        sw = new JLabel("Register");
-//        sw.setFont(Fonts.title);
-        //第一行初始化
+        //name
         Name = new JLabel("NAME");
         NameText = new JTextField(15);
-        Name.setFont(Fonts.account);
+        Name.setFont(Fonts.Info_label);
         NameText.setBounds(0, 0, 200, 100);
-        //Gender
-//        buttonGroup = new ButtonGroup();
+        //Gender button
         male = new JRadioButton("Male");
-        male.setFont(Fonts.account);
+        male.setFont(Fonts.Info_label);
         male.setOpaque(false);
 
         female = new JRadioButton("Female");
-        female.setFont(Fonts.account);
+        female.setFont(Fonts.Info_label);
         female.setOpaque(false);
-
-//        buttonGroup.add(male);
-//        buttonGroup.add(female);
+        //Age Label
         Age = new JLabel("AGE");
         AgeText = new JTextField(15);
-        Age.setFont(Fonts.account);
-
+        Age.setFont(Fonts.Info_label);
+        //ID Label
         ID = new JLabel("ID");
         IDText = new JTextField(15);
-        ID.setFont(Fonts.account);
-
+        ID.setFont(Fonts.Info_label);
+        //Major Label
         Major = new JLabel("MAJOR");
         MajorText = new JTextField(15);
-        Major.setFont(Fonts.account);
+        Major.setFont(Fonts.Info_label);
 
         Readsection = new JLabel("Reading with ID");
         ReadsectionText = new JTextField(15);
-        Readsection.setFont(Fonts.account);
+        Readsection.setFont(Fonts.Info_label);
 
-        //第5行
+        //CRUD button
         create = new JButton("Add");
-        create.setPreferredSize(new Dimension(80, 30));
+        create.setPreferredSize(new Dimension(150, 50));
+        create.setFont(Fonts.Button1);
         delete = new JButton("Delete");
         delete.setPreferredSize(new Dimension(150, 50));
+        delete.setFont(Fonts.Button1);
         read = new JButton("Read");
         read.setPreferredSize(new Dimension(150, 50));
+        read.setFont(Fonts.Button1);
         readAll = new JButton("ReadAll");
         readAll.setPreferredSize(new Dimension(150, 50));
+        readAll.setFont(Fonts.Button1);
         update = new JButton("Update");
         update.setPreferredSize(new Dimension(150, 50));
+        update.setFont(Fonts.Button1);
         reset = new JButton("Reset");
         reset.setPreferredSize(new Dimension(150, 50));
+        reset.setFont(Fonts.Button1);
 
-        //shi li hua tabble
+        // instantiate tabble
         table();
         resultArea = new JTextArea();
         resultArea.setBounds(0, 353, WIDTH - 30, 200);
@@ -246,44 +260,47 @@ public class OperateGUI extends JFrame {
 
     void table() {
         Jtable = getTable();
-        jscrollpanel = new JScrollPane(Jtable);//添加一个浏览窗格
-        jscrollpanel.setPreferredSize(new Dimension(WIDTH - 28, 200));//给窗格设置大小
-        Jtable.setPreferredSize(new Dimension(WIDTH - 50, 10000));//给表格设置大小
-        jscrollpanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);//将滑动组件显示在窗口中
+        jscrollpanel = new JScrollPane(Jtable);//Add a browse pane
+        jscrollpanel.setPreferredSize(new Dimension(WIDTH - 28, 200));//Set the size of the pane
+        Jtable.setPreferredSize(new Dimension(WIDTH - 50, 10000));//set the size of the table
+        jscrollpanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);//Display the sliding component in the window
     }
 
     JTable getTable() {
         if (Jtable == null) {
-            Jtable = new JTable();//创建 
-            int[] columnWidth = {150, 150, 150, 150, 150};//设置列宽
+            Jtable = new JTable();
+            int[] columnWidth = {150, 150, 150, 150, 150};//set column width
             model = new DefaultTableModel() {
                 public boolean isCellEditable(int row, int column) {
                     return false;
                 }
-            };//列宽 和行数  并且让表格不可编辑
+            };/*Column width and number of rows 
+                and make the table uneditable        
+             */
             model.setColumnIdentifiers(columns);
-            Jtable.setModel(model);//设置为表格的模式
-            columnModel = Jtable.getColumnModel();//获取到表格的控制
-            Jtable.getTableHeader().setReorderingAllowed(false);//让表格不可拖动
-            Jtable.getTableHeader().setResizingAllowed(false);//让表格不可拖动
-            int count = columnModel.getColumnCount();//返回列数和行数
+            Jtable.setModel(model);//Mode set to table
+            columnModel = Jtable.getColumnModel();//Get control of the form
+            Jtable.getTableHeader().setReorderingAllowed(false);//Make the table not resizable
+            Jtable.getTableHeader().setResizingAllowed(false);
+            int count = columnModel.getColumnCount();//Returns the number of columns and rows
             for (int i = 0; i < count; i++) {
-                javax.swing.table.TableColumn column = columnModel.getColumn(i);//返回列表中的对象
+                javax.swing.table.TableColumn column = columnModel.getColumn(i);//Returns the objects in the list
                 column.setPreferredWidth(columnWidth[i]);
             }
             line = new Vector(5);
         }
         return Jtable;
     }
+// set buttn name
 
-    private void setAllTag() {
+    public void setAllTag() {
         NameText.setName("NameText");
         AgeText.setName("AgeText");
         IDText.setName("IDText");
-        itemA.setName("itemA");
-        itemB.setName("itemB");
-        item1.setName("Exit");
-        item2.setName("Log out");
+        SeeAllUser.setName("SeeAllUser");
+        PasswordChange.setName("PasswordChange");
+        exit.setName("Exit");
+        LogOut.setName("Log out");
 
         //button
         create.setName("create");
@@ -294,12 +311,15 @@ public class OperateGUI extends JFrame {
         reset.setName("reset");
 
     }
+//event
 
-    private void allEvent() {
-        listener_1 = new OperatingEvent();
-        listener_2 = new Login();
-        itemA.addActionListener(listener_1);
-        itemB.addActionListener(listener_2);
+    public void allEvent() {
+        listener_1 = new Modify_Info_Event();
+        listener_2 = new GUI_Switching_Event();
+        SeeAllUser.addActionListener(listener_1);
+        PasswordChange.addActionListener(listener_2);
+        exit.addActionListener(listener_2);
+        LogOut.addActionListener(listener_2);
 
         create.addActionListener(listener_1);
         update.addActionListener(listener_1);
@@ -307,8 +327,6 @@ public class OperateGUI extends JFrame {
         delete.addActionListener(listener_1);
         readAll.addActionListener(listener_1);
         reset.addActionListener(listener_1);
-        item1.addActionListener(listener_1);
-        item2.addActionListener(listener_1);
 
     }
 }

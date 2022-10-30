@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import project2.Event.Register;
+import project2.Event.Register_Event;
 import project2.design.Fonts;
 
 /**
@@ -53,6 +53,7 @@ public class RegisterGUI extends JFrame {
     final int HEIGHT = 515;
 
     public RegisterGUI() {
+        System.out.println("Current interface: Register! ");
         run();
         validate();
         setResizable(false);
@@ -64,7 +65,7 @@ public class RegisterGUI extends JFrame {
     void run() {
         flowLayout = new FlowLayout(FlowLayout.CENTER);
 
-        Toolkit kit = Toolkit.getDefaultToolkit();//获取对象大小
+        Toolkit kit = Toolkit.getDefaultToolkit();//get object size	
         Dimension screenSize = kit.getScreenSize();
         int width = screenSize.width;
         int height = screenSize.height;
@@ -102,16 +103,16 @@ public class RegisterGUI extends JFrame {
         //第一行初始化
         account = new JLabel("    Account: ");
         accountText = new JTextField(15);
-        account.setFont(Fonts.account);
+        account.setFont(Fonts.Info_label);
         accountText.setBounds(x, y, 200, 100);
         //第二行
         password = new JLabel("Password: ");
         passwordText = new JTextField(15);
-        password.setFont(Fonts.account);
+        password.setFont(Fonts.Info_label);
         //第三行
         confirm = new JLabel("Comfirm Password:");
         confirmTxt = new JTextField(15);
-        confirm.setFont(Fonts.account);
+        confirm.setFont(Fonts.Info_label);
         //第四行
         reg = new JButton("        Register        ");
 
@@ -145,14 +146,12 @@ public class RegisterGUI extends JFrame {
     }
 
     void allEvent() {
-        listener1 = new Register();
-
+        listener1 = new Register_Event();
         reg.addActionListener(listener1);
 
     }
 
     void setAllTag() {
-
         reg.setName("reg");
     }
 

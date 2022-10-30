@@ -8,7 +8,6 @@ import project2.Interface.UpdateMethod;
 import project2.Interface.DeleteMethod;
 import project2.Interface.AddMethod;
 import project2.Interface.ReadMethod;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
@@ -19,14 +18,15 @@ import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import project2.DB.DataBase;
-import project2.GUI.OperateGUI;
+import project2.GUI.ManageGUI;
 import project2.GUI.PasswordChangeGui;
 
 /**
- *
+ *This class is responsible for adding, deleting, Read and Updaemethods(CRUD)
+ * Manage student information and make it visible to users
  * @author Kevin
  */
-public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, DeleteMethod, UpdateMethod {
+public class Modify_Info_Event implements ActionListener, ReadMethod, AddMethod, DeleteMethod, UpdateMethod {
 
     JMenuItem item;
     JButton Button;
@@ -40,8 +40,8 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
     public void actionPerformed(ActionEvent e) {
         try {
             item = (JMenuItem) e.getSource();
-            if ("itemA".equals(item.getName())) {
-                System.out.println("正在查看所有用户···");
+            if ("SeeAllUser".equals(item.getName())) {
+                System.out.println("Viewing all users···");
                 SeeAllUser();
             }
 
@@ -49,38 +49,42 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
             try {
                 Button = (JButton) e.getSource();
                 if ("create".equals(Button.getName())) {
-                    System.out.println("正在添加单个信息");
-                    AddInfo();
-                } //DELETE Button
+                    System.out.println("Adding a student information ···");
+                    AddInfo();//call add method
+                }
                 if ("delete".equals(Button.getName())) {
-                    System.out.println("正在删除单个信息");
-                    DeleteInfo();
+                    System.out.println("Deleting a student information ···");
+                    DeleteInfo();//call delete method
                 }
                 if ("update".equals(Button.getName())) {
-                    System.out.println("正在更新单个信息");
-                    UpdateInfo();
+                    System.out.println("Updating a student information ···");
+                    UpdateInfo();//call update method
                 }
                 if ("read".equals(Button.getName())) {
-                    System.out.println("正在查看单个信息");
-                    ReadInfo();
+                    System.out.println("Searching a student information ···");
+                    ReadInfo();//call search method
                 }
                 if ("readAll".equals(Button.getName())) {
-                    System.out.println("正在查看全部信息");
-                    ReadAll();
+                    System.out.println("Reading all information ··· ");
+                    ReadAll();//call ReadAll method
 
+                }
+                if ("reset".equals(Button.getName())) {
+                    System.out.println("All reset");
+                    Reset();
                 }
             } catch (Exception e2) {
             }
         }
     }
 
+    @Override
     public void SeeAllUser() {
         String sql = "SELECT * FROM ACCOUNT";
 
         try {
-            OperateGUI.resultArea.setText("");
+            ManageGUI.resultArea.setText("");
             conn = new DataBase();
-//            ps = conn.getConnection().prepareStatement(sql);
             rs = conn.queryDB(sql);
             while (rs.next()) {
                 String account = rs.getString(1);
@@ -88,8 +92,8 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
 
                 System.out.print("Account" + "\t" + account + "\t");
                 System.out.print("Password" + "\t" + password + "\n");
-                String info = OperateGUI.resultArea.getText() + "Username: " + account + "\t" + "Password: " + password + "\n";
-                OperateGUI.resultArea.setText(info);
+                String info = ManageGUI.resultArea.getText() + "Username: " + account + "\t" + "Password: " + password + "\n";
+                ManageGUI.resultArea.setText(info);
             }
             rs.close();
             conn.closeConnections();
@@ -102,16 +106,17 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
 
     @Override
     public void AddInfo() {
-        OperateGUI.model.setNumRows(0);
+        ManageGUI.model.setNumRows(0);
 //    private void AddMethod(String name, String gender, int age, String major, String ID) {
-        String name = OperateGUI.NameText.getText();
-        boolean male = OperateGUI.male.isSelected();
-        boolean female = OperateGUI.female.isSelected();
+        String name = ManageGUI.NameText.getText();
+        boolean male = ManageGUI.male.isSelected();
+        boolean female = ManageGUI.female.isSelected();
 
         String gender;
-        String age = OperateGUI.AgeText.getText();
-        String major = OperateGUI.MajorText.getText();
-        String ID = OperateGUI.IDText.getText();
+        String age = ManageGUI.AgeText.getText();
+        String major = ManageGUI.MajorText.getText();
+        String ID = ManageGUI.IDText.getText();
+        //Text File cant be empty
         if (name.equals("")) {
             JOptionPane.showMessageDialog(null, "Name Cant Be Emepty", "Name Warnning", JOptionPane.WARNING_MESSAGE);
         } else if (male == false && female == false) {
@@ -127,61 +132,64 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
         } else {
 
             if (male == true) {
-                gender = OperateGUI.male.getText();
+                gender = ManageGUI.male.getText();
             } else {
-                gender = OperateGUI.female.getText();
+                gender = ManageGUI.female.getText();
             }
             try {
                 Integer.parseInt(age);
+
+                try {
+                    //1.Get onection
+                    conn = new DataBase();
+                    statement = conn.getConnection().createStatement();
+                    //2.Define SQL
+                    String sql = "INSERT INTO STUDENT VALUES ('" + name + "', '" + gender + "','" + age + "','" + major + "','" + ID + "')";
+                    statement.execute(sql);
+                    System.out.println("ID:" + ID + "Student ADD Successfully");
+                    JOptionPane.showMessageDialog(null, ID + " ADD Successfully", "ADDimformation", JOptionPane.WARNING_MESSAGE);
+                    conn.closeConnections();
+
+                    String column[] = new String[5];
+                    column[0] = name;
+                    column[1] = gender;
+                    column[2] = age;
+                    column[3] = major;
+                    column[4] = ID;
+                    ManageGUI.model.addRow(column);
+
+                } catch (SQLException e) {
+
+                    JOptionPane.showMessageDialog(null, "ID " + ID + " has existed", "ADD imformation", JOptionPane.WARNING_MESSAGE);
+                }
             } catch (NumberFormatException e) {
-                      JOptionPane.showMessageDialog(null, "AGE Shoule Be A INTEGER", "AGE Warnning", JOptionPane.WARNING_MESSAGE);
-            }
-            try {
-                //1.获取conection
-                conn = new DataBase();
-                statement = conn.getConnection().createStatement();
-                //2.定义SQL
-                String sql = "INSERT INTO STUDENT VALUES ('" + name + "', '" + gender + "','" + age + "','" + major + "','" + ID + "')";
-                statement.execute(sql);
-                System.out.println("ADD Successfully");
-                JOptionPane.showMessageDialog(null, "ADD Successfully", "ADDimformation", JOptionPane.WARNING_MESSAGE);
-                conn.closeConnections();
 
-                String column[] = new String[5];
-                column[0] = name;
-                column[1] = gender;
-                column[2] = age;
-                column[3] = major;
-                column[4] = ID;
-                OperateGUI.model.addRow(column);
-
-            } catch (SQLException e) {
-
-                JOptionPane.showMessageDialog(null, "ID has existed", "ADD imformation", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "AGE Shoule Be A INTEGER", "AGE Warnning", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
 
     @Override
     public void ReadAll() {
-        OperateGUI.model.setNumRows(0);
+        ManageGUI.model.setNumRows(0);
         String sql = "SELECT * FROM STUDENT";
         try {
             conn = new DataBase();
 //            ps = conn.getConnection().prepareStatement(sql);
             rs = conn.queryDB(sql);
+            System.out.print("Name" + "\t" + "\t" + "Gender" + "\t" + "\t" + "Age " + "\t" + "\t" + "Major" + "\t" + "\t" + "ID" + "\n");
             while (rs.next()) {
                 String name = rs.getString(1);
                 String gender = rs.getString(2);
                 String age = rs.getString(3);
                 String major = rs.getString(4);
                 String ID = rs.getString(5);
-
-                System.out.print("Account" + "\t" + name + "\t");
-                System.out.print("Password" + "\t" + gender + "\t");
-                System.out.print("Age " + "\t" + age + "\t");
-                System.out.print("Major" + "\t" + major + "\t");
-                System.out.print("ID" + "\t" + ID + "\n");
+                System.out.print(name + "\t" + "\t" + gender + "\t" + "\t" + age + "\t" + "\t" + major + "\t" + "\t" + ID + "\n");
+//                System.out.print("Account" + "\t" + name + "\t");
+//                System.out.print("Password" + "\t" + gender + "\t");
+//                System.out.print("Age " + "\t" + age + "\t");
+//                System.out.print("Major" + "\t" + major + "\t");
+//                System.out.print("ID" + "\t" + ID + "\n");
 
                 String column[] = new String[5];
                 column[0] = name;
@@ -189,7 +197,7 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
                 column[2] = age;
                 column[3] = major;
                 column[4] = ID;
-                OperateGUI.model.addRow(column);
+                ManageGUI.model.addRow(column);
             }
             rs.close();
             conn.closeConnections();
@@ -202,8 +210,8 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
 
     @Override
     public void ReadInfo() {
-        OperateGUI.model.setNumRows(0);
-        String SearchID = OperateGUI.ReadsectionText.getText();
+        ManageGUI.model.setNumRows(0);
+        String SearchID = ManageGUI.ReadsectionText.getText();
         if (SearchID.equals("")) {
             JOptionPane.showMessageDialog(null, "SearchBar Cant Be Emepty", "ID Warnning", JOptionPane.WARNING_MESSAGE);
             System.out.println("ID cant be emepty! ");
@@ -230,7 +238,7 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
                 column[2] = age;
                 column[3] = major;
                 column[4] = ID;
-                OperateGUI.model.addRow(column);
+                ManageGUI.model.addRow(column);
 
                 System.out.print("Account" + "\t" + name + "\t");
                 System.out.print("Password" + "\t" + gender + "\t");
@@ -252,7 +260,7 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
 
     @Override
     public void DeleteInfo() {
-        String ID = OperateGUI.ReadsectionText.getText();
+        String ID = ManageGUI.ReadsectionText.getText();
         if (ID.equals("")) {
             JOptionPane.showMessageDialog(null, "SearchBar Cant Be Emepty", "ID Warnning", JOptionPane.WARNING_MESSAGE);
             System.out.println("ID cant be emepty! ");
@@ -277,16 +285,16 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
 
     @Override
     public void UpdateInfo() {
-        String SearchID = OperateGUI.ReadsectionText.getText();
-        String name = OperateGUI.NameText.getText();
-        boolean male = OperateGUI.male.isSelected();
-        boolean female = OperateGUI.female.isSelected();
+        String SearchID = ManageGUI.ReadsectionText.getText();
+        String name = ManageGUI.NameText.getText();
+        boolean male = ManageGUI.male.isSelected();
+        boolean female = ManageGUI.female.isSelected();
 
         String gender;
-        String age = OperateGUI.AgeText.getText();
-        String major = OperateGUI.MajorText.getText();
-        String ID = OperateGUI.IDText.getText();
-
+        String age = ManageGUI.AgeText.getText();
+        String major = ManageGUI.MajorText.getText();
+        String ID = ManageGUI.IDText.getText();
+        //Text File cant be empty
         if (SearchID.equals("")) {
             JOptionPane.showMessageDialog(null, "SearchBar Cant Be Emepty", "Name Warnning", JOptionPane.WARNING_MESSAGE);
         } else if (name.equals("")) {
@@ -301,15 +309,15 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
             JOptionPane.showMessageDialog(null, "ID Cant Be Emepty", "ID Warnning", JOptionPane.WARNING_MESSAGE);
         } else {
             if (male == true) {
-                gender = OperateGUI.male.getText();
+                gender = ManageGUI.male.getText();
             } else {
-                gender = OperateGUI.female.getText();
+                gender = ManageGUI.female.getText();
             }
             try {
-                //1.获取conection
+                //1.Get conection
                 conn = new DataBase();
                 statement = conn.getConnection().createStatement();
-                //2.定义SQL
+                //2.Define SQL
                 String sql = "UPDATE STUDENT SET NAME ='" + name + "',GENDER = '" + gender + "',AGE = '" + age + "',MAJOR = '" + major + "',ID = '" + ID + "'WHERE ID = '" + SearchID + "'";
                 if (statement.executeUpdate(sql) == 1) {
                     JOptionPane.showMessageDialog(null, "UPDATE " + ID + " Successfully", "ID imformation", JOptionPane.WARNING_MESSAGE);
@@ -329,11 +337,20 @@ public class OperatingEvent implements ActionListener, ReadMethod, AddMethod, De
             column[2] = age;
             column[3] = major;
             column[4] = ID;
-            OperateGUI.model.addRow(column);
+            ManageGUI.model.addRow(column);
 
         }
 
     }
 // This methos is used to Search info according to ID
 
+    public void Reset() {
+        ManageGUI.NameText.setText("");
+        ManageGUI.AgeText.setText("");
+        ManageGUI.MajorText.setText("");
+        ManageGUI.IDText.setText("");
+        ManageGUI.genderGroup.clearSelection();
+//        OperateGUI.female.setSelected(false);
+
+    }
 }

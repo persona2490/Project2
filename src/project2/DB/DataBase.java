@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
+ *This class is written by imitating lab, mainly responsible for creating database
  * @author Kevin
  */
 public class DataBase {
@@ -35,7 +35,7 @@ public class DataBase {
         if (this.conn == null) {
             try {
                 conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-                System.out.println(URL + " Get Connected Successfully ....");
+             
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }

@@ -43,7 +43,7 @@ public class OperateTest {
     @Test
     public void testRun() {
         System.out.println("run");
-        OperateGUI instance = new OperateGUI();
+        ManageGUI instance = new ManageGUI();
         instance.run();
         // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
@@ -55,7 +55,7 @@ public class OperateTest {
     @Test
     public void testTable() {
         System.out.println("table");
-        OperateGUI instance = new OperateGUI();
+        ManageGUI instance = new ManageGUI();
         instance.table();
         // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
@@ -72,7 +72,7 @@ public class OperateTest {
     @Test
     public void testSetAllTag() {
         System.out.println("setAllTag");
-        OperateGUI instance = new OperateGUI();
+        ManageGUI instance = new ManageGUI();
         instance.setAllTag();
         // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");

@@ -9,13 +9,9 @@ package project2.GUI;
  * @author Kevin
  */
 public class RUN {
-    //调用这个实例来关闭初始窗口
-
-    public static LoginGUI LogSurface;
-
+ public static LoginGUI LogSurface;//call this instance to close the initial window
     public static void main(String[] args) {
-//        runLogGui();
-        OperateGUI operateGUI = new OperateGUI();
+        runLogGui();
     }
 
     static public void runLogGui() {

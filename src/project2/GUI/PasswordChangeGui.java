@@ -12,53 +12,54 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
-import project2.Event.Login;
+import project2.Event.GUI_Switching_Event;
 
 /**
- *
+ * This class is responsible for calling password change gui
  * @author Kevin
  */
 public class PasswordChangeGui extends JFrame {
 
-    FlowLayout flowlayout;//定义一个布局
-    final int WIDTH = 300;//设置顶层框架的宽度
-    final int HEIGHT = 200;//设置顶层框架的高度
-    //一个标签  一个密码框一个  和一个按钮  
-    JLabel password;//密码标签
-    public static JPasswordField passwordtext;//定义一个密码框
+    FlowLayout flowlayout;//define a layout
+    final int WIDTH = 300;//Set the width of the frame
+    final int HEIGHT = 200;//Set the height of the frame
+    //a label, a textfiled  and a button
+    JLabel password;
+    public static JPasswordField passwordtext;
     JButton changeown;
-
+    //define a listener event   
     ActionListener lintener_1;
 
     public PasswordChangeGui() {
+        System.out.println("Current interface: password change GUI");
         run();
-        setVisible(true); //设置当前窗口是否可显示 
-        setResizable(false);//窗口的大小不可边
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//设置默认关闭方式
-        validate();//让组件生效
+        setVisible(true);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        validate();
 
     }
 
     void run() {
-        // 设置当前窗口的大小
-        Toolkit kit = Toolkit.getDefaultToolkit();//获取对象大小	//设置窗口位置
+        //Set the size of the current window
+        Toolkit kit = Toolkit.getDefaultToolkit();//get object size	
         Dimension screenSize = kit.getScreenSize();
         int width = screenSize.width;
-        int height = screenSize.height;//获取屏幕高度和宽度
+        int height = screenSize.height;//Get screen height and width
         int x = (width - WIDTH) / 2;
         int y = (height - HEIGHT) / 2;
         this.setBounds(x, y, WIDTH, HEIGHT);
         flowlayout = new FlowLayout(FlowLayout.CENTER);
-        this.setLayout(flowlayout);//设置布局
+        this.setLayout(flowlayout);//set layout
 
         password = new JLabel("Password ");
         passwordtext = new JPasswordField(15);
         changeown = new JButton("Change");
-
-        lintener_1 = new Login();
-        changeown.addActionListener(lintener_1);
+        //
 
         changeown.setName("changeown");
+        lintener_1 = new GUI_Switching_Event();
+        changeown.addActionListener(lintener_1);
         this.setTitle("PasswordChange");
 
         this.add(password);

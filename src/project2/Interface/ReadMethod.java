@@ -13,5 +13,6 @@ public interface ReadMethod {
     public void ReadInfo();
 
     public void ReadAll();
+    public void SeeAllUser();
     
 }
