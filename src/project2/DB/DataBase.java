@@ -16,9 +16,9 @@ import java.sql.Statement;
  */
 public class DataBase {
 
-    private static final String URL = "jdbc:derby://localhost:1527/Student_info_DB";  //url of the DB host
+    private static final String URL = "jdbc:derby://localhost:1527/StudentDB ";  //url of the DB host
     private static final String USER_NAME = "pdc"; //your DB username
-    private static final String PASSWORD = "123"; //your DB password
+    private static final String PASSWORD = "pdc"; //your DB password
 
     Connection conn;
 

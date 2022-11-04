@@ -185,7 +185,7 @@ public class ManageGUI extends JFrame {
         MajorText = new JTextField(15);
         Major.setFont(Fonts.Info_label);
 
-        Readsection = new JLabel("Reading with ID");
+        Readsection = new JLabel("Searching with ID");
         ReadsectionText = new JTextField(15);
         Readsection.setFont(Fonts.Info_label);
 
@@ -196,7 +196,7 @@ public class ManageGUI extends JFrame {
         delete = new JButton("Delete");
         delete.setPreferredSize(new Dimension(150, 50));
         delete.setFont(Fonts.Button1);
-        read = new JButton("Read");
+        read = new JButton("Search");
         read.setPreferredSize(new Dimension(150, 50));
         read.setFont(Fonts.Button1);
         readAll = new JButton("ReadAll");

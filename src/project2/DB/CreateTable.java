@@ -51,7 +51,7 @@ public class CreateTable extends AbstractDB{
             checkExistedTable("STUDENT");
 //            this.state.addBatch("CREATE  TABLE BOOK  (BOOKID  INT,   TITLE   VARCHAR(50),   CATEGORY   VARCHAR(20),   PRICE   FLOAT)");
             this.state.addBatch("CREATE  TABLE STUDENT  (NAME   VARCHAR(50),   GENDER   VARCHAR(50),AGE VARCHAR(50),MAJOR VARCHAR(50),ID VARCHAR(50),PRIMARY KEY(ID))");
-            this.state.addBatch("INSERT INTO STUDENT VALUES('SIYI WANG','male','23','COMPUTER SCIENCE','NGJ4393')");
+//            this.state.addBatch("INSERT INTO STUDENT VALUES('SIYI WANG','male','23','COMPUTER SCIENCE','NGJ4393')");
             this.state.executeBatch();
 
         } catch (SQLException ex) {
